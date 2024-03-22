@@ -1,0 +1,101 @@
+{
+  "locale": [
+    "en"
+  ],
+  "service": "DESK",
+  "storage": false,
+  "type": "personal",
+  "whiteListedDomains": ["https://webhook.site","https://desk.zoho.eu","https://datevconnect.riecken-webservices.at"],
+  "modules": {
+    "widgets": [
+      {
+        "location": "desk.ticket.detail.moreaction",
+        "url": "/app/widget.html",
+        "name": "DMS File Attachment",
+        "logo": "/app/img/datev.png",
+        "icon": "/app/img/datev.png"
+      }
+    ]
+  },
+  "cspDomains": {
+    "connect-src": []
+  },
+  "zohoAuthorisation": {    "type": "connectors",
+  "connectionLinkName": "zohodesktask",
+  "connectionName": "ZohoDeskTask",
+  "serviceName": "zlabs_integration",
+  "userAccess": false,
+  "isUserDefinedService": false,
+  "sharedBy": "20081917756",
+  "scope": [
+    "Desk.activities.calls.READ",
+    "Desk.activities.calls.UPDATE",
+    "Desk.activities.CREATE",
+    "Desk.activities.DELETE",
+    "Desk.activities.events.CREATE",
+    "Desk.activities.events.DELETE",
+    "Desk.activities.events.READ",
+    "Desk.activities.events.UPDATE",
+    "Desk.activities.READ",
+    "Desk.activities.tasks.READ",
+    "Desk.activities.UPDATE",
+    "Desk.tickets.ALL",
+    "Desk.tickets.CREATE",
+    "Desk.tickets.DELETE",
+    "Desk.tickets.READ",
+    "Desk.tickets.UPDATE",
+    "Desk.tickets.WRITE",
+    "Desk.articles.READ",
+    "Desk.contacts.READ",
+    "Desk.search.READ",
+    "Desk.settings.READ",
+    "Desk.tasks.READ"
+  ]},
+  "connectors": [{
+    "connectionLinkName": "datev_connection",
+    "connectionName": "Datev Connection",
+    "serviceName": "datev",
+    "userAccess": true,
+    "isUserDefinedService": true,
+    "sharedBy": "20081917756"
+  }, {
+    "connectionLinkName": "zoho_desk_connection",
+    "connectionName": "Zoho Desk Connection",
+    "serviceName": "zoho_desk",
+    "userAccess": true,
+    "isUserDefinedService": false,
+    "sharedBy": "20081917756",
+    "scope": [
+      "Desk.activities.CREATE",
+      "Desk.activities.tasks.CREATE",
+      "Desk.articles.CREATE",
+      "Desk.articles.READ",
+      "Desk.basic.ALL",
+      "Desk.basic.CREATE",
+      "Desk.basic.READ",
+      "Desk.basic.UPDATE",
+      "Desk.community.CREATE",
+      "Desk.community.READ",
+      "Desk.contacts.CREATE",
+      "Desk.contacts.READ",
+      "Desk.events.CREATE",
+      "Desk.events.READ",
+      "Desk.products.CREATE",
+      "Desk.products.READ",
+      "Desk.search.READ",
+      "Desk.settings.ALL",
+      "Desk.settings.CREATE",
+      "Desk.settings.DELETE",
+      "Desk.settings.READ",
+      "Desk.settings.UPDATE",
+      "Desk.tasks.CREATE",
+      "Desk.tasks.READ",
+      "Desk.tickets.CREATE",
+      "Desk.tickets.DELETE",
+      "Desk.tickets.READ",
+      "Desk.tickets.UPDATE"
+    ]
+  }],
+  "config": [],
+  "moduleSupport": false
+}

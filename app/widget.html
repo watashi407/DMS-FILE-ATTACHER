@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Zoho Desk - Apps</title>
+	<style>
+/* Import Google Font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  display: flex;
+  min-height: 100vh;
+  background: #e6f1d8;
+  padding: 10px;
+}
+::selection{
+  color: #fff;
+  background: #3aa94b;
+}
+.wrapper{
+  width: 420px;
+  height: 250px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px 25px 20px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.06);
+
+}
+.wrapper :where(.title, li, li i, .details){
+  display: flex;
+  align-items: top;
+}
+.title img{
+  max-width: 21px;
+}
+.title h2{
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+.title .helper{
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 70px;
+  cursor: help;
+  
+}
+
+.wrapper .content{
+  margin: 10px 0;
+  font-size: 11px;  
+}
+.content ul{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 7px;
+  margin: 12px 0;
+  border-radius: 5px;
+  border: 1px solid #a6a6a6;
+}
+.content ul  li{
+  color: #333;
+  margin: 4px 3px;
+  list-style: none;
+  border-radius: 5px;
+  background: #F2F2F2;
+  padding: 5px 8px 5px 10px;
+  border: 1px solid #e3e1e1;
+}
+
+.content ul input{
+  flex: 1;
+  padding: 2px;
+  border: none;
+  outline: none;
+  font-size: 10px;
+}
+.wrapper .details{
+  justify-content: space-between;
+  font-size: 11px;
+}
+.details button{
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 8px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  background: #3aa94b;
+  justify-content: space-between;
+  transition: background 0.3s ease;
+  margin-inline: 2px;
+}
+.details button:hover{
+  background: #025407;
+  background: #cfcfcf;
+  border-radius: 5px;
+}
+
+.close_tag{
+    height: 15px;
+  width: 15px;
+  color: #808080;
+  margin-left: 8px;
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 50%;
+  background: #dfdfdf;
+  justify-content: center;
+}
+#remove{
+    border: none;
+  outline: none;
+  color: #fff;
+  font-size: 8px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  background: #e71b11;
+  justify-content: space-between;
+  transition: background 0.3s ease;
+  margin-inline: 2px;
+}
+
+#remove button:hover{
+  background: #025407;
+  background: #cfcfcf;
+  border-radius: 5px;
+}
+
+
+
+.add_popup{
+    display: flex;
+}
+.hide_popup{
+    display: none;
+}
+
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="title">
+          <img src="./img/datev.png" alt="icon">
+          <h2>Document File</h2>
+       
+          <span class="popuptext">Popup text...</span>
+          <h2 class="helper" onmouseenter="showPopUp()" onmouseleave="hidePopUp()">🤝</h2>
+        </div>
+        <div class="content">
+          <!-- <p>Press enter to add document number :</p> -->
+          <ul><input type="text" spellcheck="false"></ul>
+        </div>
+        <div class="details">
+          <!-- <p> <span> 5 </span> Remaining Document Numbers to be added</p> -->
+          <button id="submit">Submit</button>
+          <button id="remove">Remove All</button>
+        </div>
+    </div>
+
+	<script src="https://js.zohostatic.com/support/developer_sdk/v1/js/ZohoDeskClientSDK.min.js"></script>
+
+	<script src="./igniter/app.js" charset="utf-8"></script>
+	<script src="./js/extension.js" charset="utf-8"></script>
+
+</body>
+
+</html>
