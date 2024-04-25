@@ -1,8 +1,19 @@
 let tags = [];
-const orgId = "20097803016";
+let orgId = "20097803016" || "20081917756";
+let fileName;
 const ul = document.querySelector("ul"),
   input = document.querySelector("input"),
   tagNumb = document.querySelector(".details span");
+
+
+function extractBinary(data){
+  const startIndex = data.indexOf('%PDF');
+
+  const endIndex = data.lastIndexOf('------WebKitFormBoundary');
+  const pdfContent = data.substring(startIndex, endIndex);
+
+  return pdfContent;
+}  
 
 createTag();
 
@@ -105,23 +116,18 @@ function addTag(e) {
 /* API REQUEST */
 window.onload = function () {
   ZOHODESK.extension.onload().then((App) => {
-
     let ticketId;
 
-    ZOHODESK.get("ticket").then(function(response) {
-        if(!response){
-            console.log("cant absorb")
-        }else{
-            ticketId = response["ticket"].id
+    ZOHODESK.get("ticket")
+      .then(function (response) {
+        if(response){
+          ticketId = response["ticket"].id;
+          return;
         }
-     }).catch(function(err){
-      console.log(err)
-     });
-
-
-
-
-
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     const sumbitRecord = document.querySelector("#submit");
     sumbitRecord.addEventListener("click", () => {
@@ -138,7 +144,7 @@ window.onload = function () {
             url: requestUrl,
             headers: {
               "Content-Type": "application/json",
-              "Accept": "application/json;charset=utf-8",
+              Accept: "application/json;charset=utf-8",
             },
             postBody: {},
             type: "GET",
@@ -148,15 +154,17 @@ window.onload = function () {
             connectionLinkName: "datev_connection",
           };
 
-          ZOHODESK.request(request).then(
-            (res) => {
-              if (!res) {
-                console.log("something happend in server");
-              } else {
-                const documentResponse = JSON.parse(JSON.parse(JSON.parse(res).response).statusMessage)[0];
+          ZOHODESK.request(request).then((res) => {
+              if(!res){
+                console.log(error)
+                return
+              }
+              
+                const documentResponse = JSON.parse(
+                  JSON.parse(JSON.parse(res).response).statusMessage
+                )[0];           
                 const documentID = documentResponse.id;
-                let documentName;
-                documentName = documentResponse.name;
+     
                 let documentStructure = `${baseUrl}/documents/${documentID}/structure-items`;
 
                 const requestStructure = {
@@ -176,63 +184,40 @@ window.onload = function () {
                     if (!res) {
                       console.log("something happend in server");
                     } else {
-                      const documentFileID = JSON.parse(JSON.parse(JSON.parse(res).response).statusMessage)[0].document_file_id;
-                      let documentFileUrl = `${baseUrl}/document-files/${documentFileID}`;
-                      const documentFile = {
-                        url: documentFileUrl,
+                      let documentFileID = JSON.parse(JSON.parse(JSON.parse(res).response).statusMessage).shift().document_file_id;
+                        console.log(documentFileID)
+                        console.log(ticketId)
+                      var triggerAttachment = {
+                        url: "https://www.zohoapis.eu/crm/v2/functions/testemail/actions/execute",
                         headers: {
-                          "Accept": "application/octet-stream"
+                            'Content-Type': 'application/json'
                         },
                         postBody: {},
-                        type: "GET",
-                        data: {},
-                        connectionLinkName: "datev_connection",
-                      };
-                      ZOHODESK.request(documentFile).then(res => {
-                        if(!res){
-                            console.log("something happend in server");
+                        type: 'POST',
+                        data: {
+                            "auth_type":"apikey",
+                            "zapikey":"1003.eb88b4a772b1f4098656ebd6f6a1e895.10ba8555d32264469535fee12d98a084",
+                            "documentId": documentFileID,
+                            "ticketId":ticketId
                         }
-                        else{
-                            const documentFileUnrefined = JSON.parse(res).response;
-
-                            const blob = new Blob([documentFileUnrefined], { type: 'application/pdf' });
-                            const formData = new FormData();
-                            formData.append("file", blob, documentName);
-                            
-                            let attachmentFIle = {
-                                url: `https://desk.zoho.eu/api/v1/tickets/${ticketId}/attachments`,
-                                type: "POST",
-                                data: {
-                                },
-                                postBody: {},
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Content-Type":"multipart/form-data",
-                                    'orgId': orgId
-                                },
-                                fileObj: [{ "key": "file1", "file": blob }],
-                                connectionLinkName:"zoho_desk_connection",
-                                
-                            }
-                        
-                            ZOHODESK.request(attachmentFIle).then(res => {
-                                console.log(res);
-                            }, (error) => {
-
-                                console.log(`something happend ${error}`);
-                            })
-                        }
-
+                    }
+                    ZOHODESK.request(triggerAttachment).then(res => {
+                        // Implement your logic here
+                       let reponseAttchment =JSON.parse(res).response;
+                       console.log(reponseAttchment);
                     }, (error) => {
+                        // Implement your logic here
                         console.log(error);
                     })
+  
+
                     }
                   },
                   (error) => {
                     console.log(error);
                   }
                 );
-              }
+
             },
             (error) => {
               console.log(error);
