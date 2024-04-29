@@ -6,10 +6,10 @@ cardPage.style.display = 'none';
   setTimeout(() => {
     Pageloader.style.display = 'none';
     cardPage.style.display = 'block';
-  }, 10000);
+  }, 6000);
 };
 
-PageLoader()
+
 
 
   let tags = [];
