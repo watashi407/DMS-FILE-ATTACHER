@@ -11,15 +11,13 @@ cardPage.style.display = 'none';
 
 
 
-
+// Tag Element
   let tags = [];
   let orgId = "20097803016" || "20081917756";
   let fileName;
   const ul = document.querySelector("ul"),
     input = document.querySelector("input"),
     tagNumb = document.querySelector(".details span");
-  
-  createTag();
   
   
   /*
@@ -51,6 +49,12 @@ cardPage.style.display = 'none';
     tags.length = 0;
     ul.querySelectorAll("li").forEach((li) => li.remove());
   });
+
+ 
+    /* remove Reload */
+   document.getElementById("reload").addEventListener("click", () => {
+    location.reload(true);
+    });
   
   /*error message */
   
@@ -126,9 +130,9 @@ cardPage.style.display = 'none';
   window.onload = function () {
     ZOHODESK.extension.onload().then(() => {
   
-    
+      createTag();
+      PageLoader() 
       let ticketId;
-      
       ZOHODESK.get("ticket")
         .then(function (response) {
           if(response){
@@ -139,8 +143,8 @@ cardPage.style.display = 'none';
         .catch(function (err) {
           console.log(err);
         });
-  
-        PageLoader(ticketId)  
+
+     
       const sumbitRecord = document.querySelector("#submit");
       sumbitRecord.addEventListener("click", () => {
         if (tags != null && tags != "") {
@@ -173,6 +177,8 @@ cardPage.style.display = 'none';
                   if(!documentResponse){
                     textMessage = "Error: Document ID doesn`t found.❗";
                     showAlert(textMessage)
+                    tags.length = 0;
+                    ul.querySelectorAll("li").forEach((li) => li.remove());
                   }          
                   const documentID = documentResponse.id;
                 
@@ -220,14 +226,18 @@ cardPage.style.display = 'none';
                          let reponseAttchment =JSON.parse(res).response;
                          reponseAttchment = JSON.parse(reponseAttchment).code
                           if(reponseAttchment === "success"){
+                            ZOHODESK.invoke("ROUTE_TO","ticket.attachments");
                             ZOHODESK.notify({
                               title: "DMS APP : File Attachment Success",
                               content: `This file already attached to this ticket`,
                               icon: "success",
                               autoClose: true
                           });
+
+
+                          ZOHODESK.invoke("HIDE");
                           }
-         
+                          
   
   
                       }, (error) => {
